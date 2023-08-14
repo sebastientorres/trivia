@@ -200,8 +200,8 @@ exports.Game = function () {
     console.log(players[currentPlayer] + " was sent to the penalty box");
     inPenaltyBox[currentPlayer] = true;
 
-    currentPlayer += 1;
-    if (currentPlayer == players.length) currentPlayer = 0;
+    this.changeCurrentPlayer();
+
     return true;
   };
 };
