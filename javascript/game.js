@@ -13,6 +13,35 @@ exports.Game = function () {
   var sportsQuestions = new Array();
   var rockQuestions = new Array();
 
+
+  const questionsArray = [
+    {"POP" : {
+      questions: popQuestions,
+        index: 0
+      }},
+    {
+      "SCIENCE" : {
+        questions: scienceQuestions,
+        index: 0
+      }
+    }
+  ]
+
+  /*
+  * TODO
+  *  Populate questionsArray with questionCat objs
+  *
+  *  Write logic to compare currentCategory vs questionsArray Obj,
+  * then ask question.
+  *
+  * increment index of correct obj,
+  *
+  * insure index does not exceed obj.questions.length, else reset to 0.
+  *
+  * may need to for loop for questions about obj arr
+  *
+  * */
+
   var currentPlayer = 0;
   var isGettingOutOfPenaltyBox = false;
 
@@ -123,7 +152,7 @@ exports.Game = function () {
   };
 
   this.askQuestionFromCategory = function (questions) {
-    
+
     console.log(questions.shift());
   }
 
