@@ -163,14 +163,36 @@ describe('all tests!', () => {
   })
 
   describe("questions", function () {
-    it('When asking a question deck of questions remains the same length', () => {
 
+
+
+    it('When asking a question deck of questions remains the same length', () => {
       const game = new Game;
 
+      const popQuestions = game.getPopQuestions();
+
+      for (let i = 0; i < popQuestions.length ; i++) {
+
+      }
       game.askQuestionFromCategory(game.getPopQuestions());
-      expect(game.getPopQuestions().length).toEqual(50);
+      expect(popQuestions.length).toEqual(50);
 
     });
+
+    it('should keep track of the current index of questions and the index should increment expectedly', () => {
+      const game = new Game;
+
+      const numberOfQuestionsAsked = 10;
+
+      for (let i = 0; i < numberOfQuestionsAsked; i++) {
+        game.askQuestionFromCategory(game.getPopQuestions());
+      }
+
+      // TODO - expect the index to have moved to numberOfQuestionsAsked.
+      // expect(game.getPopQuestions().currentQuestion).toEqual(numberOfQuestionsAsked);
+    });
+
+
   })
 
 });
