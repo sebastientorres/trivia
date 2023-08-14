@@ -162,4 +162,15 @@ describe('all tests!', () => {
     })
   })
 
+  describe("questions", function () {
+    it('When asking a question deck of questions remains the same length', () => {
+
+      const game = new Game;
+
+      game.askQuestionFromCategory(game.getPopQuestions());
+      expect(game.getPopQuestions().length).toEqual(50);
+
+    });
+  })
+
 });

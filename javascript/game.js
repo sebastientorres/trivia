@@ -34,6 +34,10 @@ exports.Game = function () {
     return currentPlayer;
   };
 
+  this.getPopQuestions = function () {
+    return popQuestions
+  }
+
   var currentCategory = function () {
     if (places[currentPlayer] == 0) return "Pop";
     if (places[currentPlayer] == 4) return "Pop";
@@ -57,6 +61,7 @@ exports.Game = function () {
     sportsQuestions.push("Sports Question " + i);
     rockQuestions.push(this.createRockQuestion(i));
   }
+
   this.isPlayable = function () {
     return players.length >= 2;
   };
@@ -110,12 +115,17 @@ exports.Game = function () {
     );
   };
 
-  var askQuestion = function () {
-    if (currentCategory() == "Pop") console.log(popQuestions.shift());
-    if (currentCategory() == "Science") console.log(scienceQuestions.shift());
-    if (currentCategory() == "Sports") console.log(sportsQuestions.shift());
-    if (currentCategory() == "Rock") console.log(rockQuestions.shift());
+  this.askQuestion = function () {
+    if (currentCategory() == "Pop") this.askQuestionFromCategory(popQuestions);
+    if (currentCategory() == "Science") this.askQuestionFromCategory(scienceQuestions);
+    if (currentCategory() == "Sports") this.askQuestionFromCategory(sportsQuestions);
+    if (currentCategory() == "Rock") this.askQuestionFromCategory(rockQuestions);
   };
+
+  this.askQuestionFromCategory = function (questions) {
+    
+    console.log(questions.shift());
+  }
 
   /*
    * playRound()
@@ -204,6 +214,7 @@ exports.Game = function () {
 
     return true;
   };
+  // return {popQuestions}
 };
 
 /*var notAWinner = false;
