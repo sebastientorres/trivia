@@ -194,6 +194,18 @@ describe('all tests!', () => {
       // expect(game.getPopQuestions().currentQuestion).toEqual(numberOfQuestionsAsked);
     });
 
+    it("more questions asked than there are in deck, should go back to the beginning of the deck", () => {
+      const game = new Game;
+
+      const numberOfQuestionAsked = 51;
+      const popObj = game.getQuestionsArray()[0];
+
+      for(let i=0; i< numberOfQuestionAsked; i++){
+        game.askQuestion('Pop');
+      }
+      expect(popObj.index).toEqual(1)
+    })
+
 
   })
 

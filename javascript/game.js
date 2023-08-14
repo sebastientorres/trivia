@@ -163,8 +163,9 @@ exports.Game = function () {
     questionsArray.forEach((cat) => {
       if (cat.cat === category) {
         const position = this.resetIndex(cat.questions, cat.index);
-        this.askQuestionFromCategory(cat.questions, position);
-        cat['index'] += 1;
+        cat.index = position;
+        this.askQuestionFromCategory(cat.questions, cat.index);
+        cat.index += 1; // can use either bracket notation cat['index'] or dot notation cat.index
       }
     });
   };
