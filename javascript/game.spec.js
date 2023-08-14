@@ -78,7 +78,7 @@ describe("our player number tests", function() {
 
 describe("Penalty box tests", function() {
 
-  it("Player that is currently in box, answers correctly, is release", function(){
+  it("Player that is currently in box, rolls odd and answers correctly, is released", function(){
 
     const game = new Game;
 
@@ -91,4 +91,70 @@ describe("Penalty box tests", function() {
     game.wasCorrectlyAnswered();
     expect(game.getInPenaltyBox()[0]).toBe(false);
   });
+
+  it("Player currently in penalty box, does NOT roll odd, answers correctly, is NOT released", function(){
+
+    const game = new Game;
+
+    game.add("Jedd");
+    game.add("Bill");
+    game.getInPenaltyBox()[0] = true;
+
+    game.roll(2);
+    game.wasCorrectlyAnswered();
+    expect(game.getInPenaltyBox()[0]).toBe(true);
+  })
 });
+
+describe("Coin and purse tests", function() {
+  it("Player answers one question correctly, has one coin", function() {
+    const game = new Game;
+
+    game.add("Jess");
+    game.add("August");
+    game.roll(3);
+    game.wasCorrectlyAnswered();
+    expect(game.getPlayerPurse()[0]).toBe(1)
+  });
+
+  it("Player currently in pen box, being released, answers correctly, gains one coin", function() {
+    const game = new Game;
+
+    game.add('Jeff');
+    game.add('steve');
+    game.getInPenaltyBox()[0] = true;
+
+    game.roll(1);
+
+    game.wasCorrectlyAnswered();
+    expect(game.getPlayerPurse()[0]).toBe(1);
+
+  });
+
+  it("Player currently in pen box, NOT being release, answers correctly, does NOT gain one coin", function() {
+
+    const game = new Game;
+
+    game.add("Jedd");
+    game.add("Bill");
+    game.getInPenaltyBox()[0] = true;
+
+    game.roll(2);
+    game.wasCorrectlyAnswered();
+    expect(game.getPlayerPurse()[0]).toBe(0);
+  })
+});
+
+describe("Player turn tests", function() {
+  it("Two player game, first player answers correctly, second players turn", function() {
+    const game = new Game;
+
+    game.add("Guilty")
+    game.add("Treeson");
+    game.roll(2);
+    game.wasCorrectlyAnswered();
+    let actual = game.getCurrentPlayerNumber();
+    expect(actual).toEqual(1);
+
+  })
+})
