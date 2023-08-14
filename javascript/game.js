@@ -89,6 +89,10 @@ exports.Game = function () {
     return popQuestions;
   };
 
+  this.getQuestionsArray = function () {
+    return questionsArray;
+  };
+
   var currentCategory = function () {
     if (places[currentPlayer] == 0) return "Pop";
     if (places[currentPlayer] == 4) return "Pop";
@@ -160,7 +164,7 @@ exports.Game = function () {
       if (cat.cat === category) {
         const position = this.resetIndex(cat.questions, cat.index);
         this.askQuestionFromCategory(cat.questions, position);
-        cat.index += 1;
+        cat['index'] += 1;
       }
     });
   };
@@ -170,7 +174,7 @@ exports.Game = function () {
   };
 
   this.resetIndex = function (arr, index) {
-    if (index > arr.length) {
+    if (index > arr.length - 1) {
       return 0;
     } else {
       return index;

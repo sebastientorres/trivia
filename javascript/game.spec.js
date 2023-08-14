@@ -169,13 +169,13 @@ describe('all tests!', () => {
     it('When asking a question deck of questions remains the same length', () => {
       const game = new Game;
 
-      const popQuestions = game.getPopQuestions();
+      const popQuestions = game.getQuestionsArray()[0];
 
-      for (let i = 0; i < popQuestions.length ; i++) {
+      for (let i = 0; i < 50 ; i++) {
 
       }
-      game.askQuestionFromCategory(game.getPopQuestions());
-      expect(popQuestions.length).toEqual(50);
+      game.askQuestionFromCategory('Pop');
+      expect(popQuestions.questions.length).toEqual(50);
 
     });
 
@@ -183,11 +183,13 @@ describe('all tests!', () => {
       const game = new Game;
 
       const numberOfQuestionsAsked = 10;
+      const popObj = game.getQuestionsArray()[0];
 
       for (let i = 0; i < numberOfQuestionsAsked; i++) {
-        game.askQuestionFromCategory(game.getPopQuestions());
+        game.askQuestion('Pop');
       }
 
+      expect(popObj.index).toEqual(10)
       // TODO - expect the index to have moved to numberOfQuestionsAsked.
       // expect(game.getPopQuestions().currentQuestion).toEqual(numberOfQuestionsAsked);
     });
