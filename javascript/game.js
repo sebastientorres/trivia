@@ -24,7 +24,7 @@ exports.Game = function () {
     rockQuestions.push(this.createRockQuestion(i));
   }
 
-  const questionsArray = [
+  const deckArray = [
     {
       cat: "Pop",
       questions: popQuestions,
@@ -90,7 +90,7 @@ exports.Game = function () {
   };
 
   this.getQuestionsArray = function () {
-    return questionsArray;
+    return deckArray;
   };
 
   var currentCategory = function () {
@@ -160,16 +160,17 @@ exports.Game = function () {
   };
 
   this.askQuestion = function (category = currentCategory()) {
-    questionsArray.forEach((cat) => {
-      if (cat.cat === category) {
-        const position = this.resetIndex(cat.questions, cat.index);
-        cat.index = position;
-        this.askQuestionFromCategory(cat.questions, cat.index);
-        cat.index += 1; // can use either bracket notation cat['index'] or dot notation cat.index
+    deckArray.forEach((deck) => {
+      if (deck.cat === category) {
+        const position = this.resetIndex(deck.questions, deck.index);
+        deck.index = position;
+        this.askQuestionFromCategory(deck.questions, deck.index);
+        deck.index += 1; // can use either bracket notation cat['index'] or dot notation cat.index
       }
     });
   };
 
+  //can remove this now
   this.askQuestionFromCategory = function (questions, index) {
     console.log(questions[index]);
   };
