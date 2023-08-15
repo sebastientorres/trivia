@@ -164,7 +164,7 @@ exports.Game = function () {
       if (deck.cat === category) {
         const position = this.resetIndex(deck.questions, deck.index);
         deck.index = position;
-        this.askQuestionFromCategory(deck.questions, deck.index);
+        console.log(deck.questions[deck.index]);
         deck.index += 1; // can use either bracket notation cat['index'] or dot notation cat.index
       }
     });
