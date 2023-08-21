@@ -13,44 +13,42 @@ exports.Game = function () {
   var sportsQuestions = new Array();
   var rockQuestions = new Array();
 
-  this.createRockQuestion = function (index) {
-    return "Rock Question " + index;
-  };
+  const POP = 'Pop';
+  const SCIENCE = 'Science';
+  const SPORTS = 'Sports';
+  const ROCK = 'Rock';
 
-  for (var i = 0; i < 50; i++) {
-    popQuestions.push("Pop Question " + i);
-    scienceQuestions.push("Science Question " + i);
-    sportsQuestions.push("Sports Question " + i);
-    rockQuestions.push(this.createRockQuestion(i));
+  this.createQuestionForCategory = function (cat, index) {
+    return `${cat} Question ${index}`;
   }
 
-  const Question = {
-    POP: 0,
-    SCIENCE: 1,
-    SPORTS: 2,
-    ROCK: 3
-  };
+  for (let i = 0; i < 50; i++) {
+    popQuestions.push(this.createQuestionForCategory(POP, i));
+    scienceQuestions.push(this.createQuestionForCategory(SCIENCE, i));
+    sportsQuestions.push(this.createQuestionForCategory(SPORTS, i));
+    rockQuestions.push(this.createQuestionForCategory(ROCK, i));
+  }
 
   const deckArray = [
     {
-      cat: "Pop",
+      cat: POP,
       questions: popQuestions,
       index: 0,
     },
 
     {
-      cat: "Science",
+      cat: SCIENCE,
       questions: scienceQuestions,
       index: 0,
     },
     {
-      cat: "Sports",
+      cat: SPORTS,
       questions: sportsQuestions,
       index: 0,
     },
 
     {
-      cat: "Rock",
+      cat: ROCK,
       questions: rockQuestions,
       index: 0,
     },
@@ -100,16 +98,16 @@ exports.Game = function () {
     return deckArray;
   };
 
-  var currentCategory = function () {
-    if (places[currentPlayer] == 0) return "Pop";
-    if (places[currentPlayer] == 4) return "Pop";
-    if (places[currentPlayer] == 8) return "Pop";
-    if (places[currentPlayer] == 1) return "Science";
-    if (places[currentPlayer] == 5) return "Science";
-    if (places[currentPlayer] == 9) return "Science";
-    if (places[currentPlayer] == 2) return "Sports";
-    if (places[currentPlayer] == 6) return "Sports";
-    if (places[currentPlayer] == 10) return "Sports";
+  let currentCategory = function () {
+    if (places[currentPlayer] == 0) return POP;
+    if (places[currentPlayer] == 4) return  POP;
+    if (places[currentPlayer] == 8) return  POP;
+    if (places[currentPlayer] == 1) return SCIENCE;
+    if (places[currentPlayer] == 5) return SCIENCE;
+    if (places[currentPlayer] == 9) return SCIENCE;
+    if (places[currentPlayer] == 2) return SPORTS;
+    if (places[currentPlayer] == 6) return SPORTS;
+    if (places[currentPlayer] == 10) return SPORTS;
     return "Rock";
   };
 
