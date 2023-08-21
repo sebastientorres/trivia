@@ -24,6 +24,13 @@ exports.Game = function () {
     rockQuestions.push(this.createRockQuestion(i));
   }
 
+  const Question = {
+    POP: 0,
+    SCIENCE: 1,
+    SPORTS: 2,
+    ROCK: 3
+  };
+
   const deckArray = [
     {
       cat: "Pop",
@@ -162,10 +169,8 @@ exports.Game = function () {
   this.askQuestion = function (category = currentCategory()) {
     deckArray.forEach((deck) => {
       if (deck.cat === category) {
-        const position = this.resetIndex(deck.questions, deck.index);
-        deck.index = position;
+        deck.index = this.getDeckNextPosition(deck.questions, deck.index);
         console.log(deck.questions[deck.index]);
-        deck.index += 1; // can use either bracket notation cat['index'] or dot notation cat.index
       }
     });
   };
@@ -175,11 +180,11 @@ exports.Game = function () {
     console.log(questions[index]);
   };
 
-  this.resetIndex = function (arr, index) {
-    if (index > arr.length - 1) {
+  this.getDeckNextPosition = function (arr, index) {
+    if (index == arr.length - 1) {
       return 0;
     } else {
-      return index;
+      return ++index;
     }
   };
 

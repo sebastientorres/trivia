@@ -164,19 +164,16 @@ describe('all tests!', () => {
 
   describe("questions", function () {
 
-
-
     it('When asking a question deck of questions remains the same length', () => {
       const game = new Game;
-
+      const numberOfQuestionAsked = game.getPopQuestions().length
       const popQuestions = game.getQuestionsArray()[0];
 
-      for (let i = 0; i < 50 ; i++) {
-
+      for (let i = 0; i < numberOfQuestionAsked ; i++) {
+        game.askQuestionFromCategory('Pop');
       }
-      game.askQuestionFromCategory('Pop');
-      expect(popQuestions.questions.length).toEqual(50);
 
+      expect(popQuestions.questions.length).toEqual(50);
     });
 
     it('should keep track of the current index of questions and the index should increment expectedly', () => {
@@ -190,20 +187,18 @@ describe('all tests!', () => {
       }
 
       expect(popObj.index).toEqual(10)
-      // TODO - expect the index to have moved to numberOfQuestionsAsked.
-      // expect(game.getPopQuestions().currentQuestion).toEqual(numberOfQuestionsAsked);
     });
 
     it("more questions asked than there are in deck, should go back to the beginning of the deck", () => {
       const game = new Game;
 
-      const numberOfQuestionAsked = 51;
+      const numberOfQuestionAsked = game.getPopQuestions().length+=1;
       const popObj = game.getQuestionsArray()[0];
 
       for(let i=0; i< numberOfQuestionAsked; i++){
         game.askQuestion('Pop');
       }
-      expect(popObj.index).toEqual(1)
+      expect(popObj.index).toEqual(0)
     })
 
 
