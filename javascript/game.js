@@ -108,7 +108,7 @@ exports.Game = function () {
     if (places[currentPlayer] == 2) return SPORTS;
     if (places[currentPlayer] == 6) return SPORTS;
     if (places[currentPlayer] == 10) return SPORTS;
-    return "Rock";
+    return ROCK;
   };
 
   this.isPlayable = function () {
