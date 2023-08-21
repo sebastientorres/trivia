@@ -13,6 +13,62 @@ exports.Game = function () {
   var sportsQuestions = new Array();
   var rockQuestions = new Array();
 
+  const POP = 'Pop';
+  const SCIENCE = 'Science';
+  const SPORTS = 'Sports';
+  const ROCK = 'Rock';
+
+  this.createQuestionForCategory = function (cat, index) {
+    return `${cat} Question ${index}`;
+  }
+
+  for (let i = 0; i < 50; i++) {
+    popQuestions.push(this.createQuestionForCategory(POP, i));
+    scienceQuestions.push(this.createQuestionForCategory(SCIENCE, i));
+    sportsQuestions.push(this.createQuestionForCategory(SPORTS, i));
+    rockQuestions.push(this.createQuestionForCategory(ROCK, i));
+  }
+
+  const deckArray = [
+    {
+      cat: POP,
+      questions: popQuestions,
+      index: 0,
+    },
+
+    {
+      cat: SCIENCE,
+      questions: scienceQuestions,
+      index: 0,
+    },
+    {
+      cat: SPORTS,
+      questions: sportsQuestions,
+      index: 0,
+    },
+
+    {
+      cat: ROCK,
+      questions: rockQuestions,
+      index: 0,
+    },
+  ];
+
+  /*
+   * TODO
+   *  Populate questionsArray with questionCat objs
+   *
+   *  Write logic to compare currentCategory vs questionsArray Obj,
+   * then ask question.
+   *
+   * increment index of correct obj,
+   *
+   * insure index does not exceed obj.questions.length, else reset to 0.
+   *
+   * may need to for loop for questions about obj arr
+   *
+   * */
+
   var currentPlayer = 0;
   var isGettingOutOfPenaltyBox = false;
 
@@ -34,29 +90,27 @@ exports.Game = function () {
     return currentPlayer;
   };
 
-  var currentCategory = function () {
-    if (places[currentPlayer] == 0) return "Pop";
-    if (places[currentPlayer] == 4) return "Pop";
-    if (places[currentPlayer] == 8) return "Pop";
-    if (places[currentPlayer] == 1) return "Science";
-    if (places[currentPlayer] == 5) return "Science";
-    if (places[currentPlayer] == 9) return "Science";
-    if (places[currentPlayer] == 2) return "Sports";
-    if (places[currentPlayer] == 6) return "Sports";
-    if (places[currentPlayer] == 10) return "Sports";
+  this.getPopQuestions = function () {
+    return popQuestions;
+  };
+
+  this.getQuestionsArray = function () {
+    return deckArray;
+  };
+
+  let currentCategory = function () {
+    if (places[currentPlayer] == 0) return POP;
+    if (places[currentPlayer] == 4) return  POP;
+    if (places[currentPlayer] == 8) return  POP;
+    if (places[currentPlayer] == 1) return SCIENCE;
+    if (places[currentPlayer] == 5) return SCIENCE;
+    if (places[currentPlayer] == 9) return SCIENCE;
+    if (places[currentPlayer] == 2) return SPORTS;
+    if (places[currentPlayer] == 6) return SPORTS;
+    if (places[currentPlayer] == 10) return SPORTS;
     return "Rock";
   };
 
-  this.createRockQuestion = function (index) {
-    return "Rock Question " + index;
-  };
-
-  for (var i = 0; i < 50; i++) {
-    popQuestions.push("Pop Question " + i);
-    scienceQuestions.push("Science Question " + i);
-    sportsQuestions.push("Sports Question " + i);
-    rockQuestions.push(this.createRockQuestion(i));
-  }
   this.isPlayable = function () {
     return players.length >= 2;
   };
@@ -110,11 +164,26 @@ exports.Game = function () {
     );
   };
 
-  var askQuestion = function () {
-    if (currentCategory() == "Pop") console.log(popQuestions.shift());
-    if (currentCategory() == "Science") console.log(scienceQuestions.shift());
-    if (currentCategory() == "Sports") console.log(sportsQuestions.shift());
-    if (currentCategory() == "Rock") console.log(rockQuestions.shift());
+  this.askQuestion = function (category = currentCategory()) {
+    deckArray.forEach((deck) => {
+      if (deck.cat === category) {
+        deck.index = this.getDeckNextPosition(deck.questions, deck.index);
+        console.log(deck.questions[deck.index]);
+      }
+    });
+  };
+
+  //can remove this now
+  this.askQuestionFromCategory = function (questions, index) {
+    console.log(questions[index]);
+  };
+
+  this.getDeckNextPosition = function (arr, index) {
+    if (index == arr.length - 1) {
+      return 0;
+    } else {
+      return ++index;
+    }
   };
 
   /*
@@ -152,7 +221,7 @@ exports.Game = function () {
               places[currentPlayer]
           );
           console.log("The category is " + currentCategory());
-          askQuestion();
+          this.askQuestion();
         } else {
           console.log(
             players[currentPlayer] + " is not getting out of the penalty box"
@@ -169,7 +238,7 @@ exports.Game = function () {
           players[currentPlayer] + "'s new location is " + places[currentPlayer]
         );
         console.log("The category is " + currentCategory());
-        askQuestion();
+        this.askQuestion();
       }
       return true;
     } else {
@@ -204,6 +273,7 @@ exports.Game = function () {
 
     return true;
   };
+  // return {popQuestions}
 };
 
 /*var notAWinner = false;
