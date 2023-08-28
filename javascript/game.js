@@ -1,3 +1,4 @@
+const {de} = require("yarn/lib/cli");
 exports = typeof window !== "undefined" && window !== null ? window : global;
 
 exports.Game = function () {
@@ -9,47 +10,47 @@ exports.Game = function () {
   var inPenaltyBox = new Array(maxNumberOfPlayers);
 
   var popQuestions = new Array();
-  var scienceQuestions = new Array();
-  var sportsQuestions = new Array();
-  var rockQuestions = new Array();
 
   const POP = 'Pop';
   const SCIENCE = 'Science';
   const SPORTS = 'Sports';
   const ROCK = 'Rock';
 
+  const NUMBER_OF_QUESTIONS = 50;
+
   this.createQuestionForCategory = function (cat, index) {
     return `${cat} Question ${index}`;
   }
 
-  for (let i = 0; i < 50; i++) {
-    popQuestions.push(this.createQuestionForCategory(POP, i));
-    scienceQuestions.push(this.createQuestionForCategory(SCIENCE, i));
-    sportsQuestions.push(this.createQuestionForCategory(SPORTS, i));
-    rockQuestions.push(this.createQuestionForCategory(ROCK, i));
+  this.createQuestions = function (categoryName, numberOfQuestions) {
+    const questions = [];
+    for (let i = 0; i < numberOfQuestions; i++) {
+      questions.push(this.createQuestionForCategory(categoryName, i));
+    }
+    return questions;
   }
 
   const deckArray = [
     {
       cat: POP,
-      questions: popQuestions,
+      questions: this.createQuestions(POP, NUMBER_OF_QUESTIONS),
       index: 0,
     },
 
     {
       cat: SCIENCE,
-      questions: scienceQuestions,
+      questions: this.createQuestions(SCIENCE, NUMBER_OF_QUESTIONS),
       index: 0,
     },
     {
       cat: SPORTS,
-      questions: sportsQuestions,
+      questions: this.createQuestions(SPORTS, NUMBER_OF_QUESTIONS),
       index: 0,
     },
 
     {
       cat: ROCK,
-      questions: rockQuestions,
+      questions: this.createQuestions(ROCK, NUMBER_OF_QUESTIONS),
       index: 0,
     },
   ];
@@ -74,7 +75,7 @@ exports.Game = function () {
 
   var didPlayerWin = function () {
     //what is the winning condition? is it when player has 6 coins?, why the '!'?
-    return !(purses[currentPlayer] == maxNumberOfPlayers);
+    return !(purses[currentPlayer] === maxNumberOfPlayers);
   };
 
   /* Functions for accessing variables to enable testing  */
@@ -94,9 +95,20 @@ exports.Game = function () {
     return popQuestions;
   };
 
+  this.categoryFactory = function(name, question, index = 0){
+
+    return { cat: name, questions : this.createQuestions(name, NUMBER_OF_QUESTIONS), index}
+
+  }
+
   this.getQuestionsArray = function () {
     return deckArray;
   };
+
+  this.addCategory = function (name){
+    let newCategory = this.categoryFactory(name);
+    deckArray.push(newCategory);
+  }
 
   let currentCategory = function () {
     if (places[currentPlayer] == 0) return POP;

@@ -203,5 +203,32 @@ describe('all tests!', () => {
 
 
   })
+   describe("Category tests", function (){
 
+     it ("Add new category, new item added to deck array", () => {
+       const game = new Game;
+
+       const catName = 'LOTR';
+       const questionsArrayLength = game.getQuestionsArray().length;
+
+       expect(game.getQuestionsArray().length).toBe(questionsArrayLength);
+
+       game.addCategory(catName);
+
+       expect(game.getQuestionsArray().length).toBe(questionsArrayLength + 1);
+
+     })
+   })
+
+  it("All categories have a deck of questions of the same length", () => {
+    let game = new Game;
+    const deck = game.getQuestionsArray();
+    const expectedNumberOfQuestions = game.getPopQuestions().length
+    game.addCategory('LOTR');
+
+    for (let i=0; i<deck.length; i++){
+      expect(deck[i].questions.length).toBe(expectedNumberOfQuestions);
+    }
+
+  })
 });
