@@ -4,6 +4,18 @@ exports = typeof window !== "undefined" && window !== null ? window : global;
 exports.Game = function () {
   const maxNumberOfPlayers = 6;
 
+  const BOARD_LENGTH = 12;
+
+  this.makeBoardArray =function(length){
+      const boardArray = [];
+
+      for(let i=0; i<length; i++){
+          boardArray.push(i);
+      }
+
+      return boardArray;
+    }
+
   var players = new Array();
   var places = new Array(maxNumberOfPlayers);
   var purses = new Array(maxNumberOfPlayers);
@@ -35,25 +47,41 @@ exports.Game = function () {
       cat: POP,
       questions: this.createQuestions(POP, NUMBER_OF_QUESTIONS),
       index: 0,
+        boardPostions: []
     },
 
     {
       cat: SCIENCE,
       questions: this.createQuestions(SCIENCE, NUMBER_OF_QUESTIONS),
       index: 0,
+        boardPostions: []
     },
     {
       cat: SPORTS,
       questions: this.createQuestions(SPORTS, NUMBER_OF_QUESTIONS),
       index: 0,
+        boardPostions: []
     },
 
     {
       cat: ROCK,
       questions: this.createQuestions(ROCK, NUMBER_OF_QUESTIONS),
       index: 0,
+        boardPostions: []
     },
   ];
+
+  this.populateBoardPostions = function(arr){
+
+    for (let j=0; j<arr.length; j++){
+      for(let i=0; i<deckArray; i++){
+        let cat = deckArray[i];
+        cat.boardPostions.push(j);
+
+      }
+    }
+  }
+
 
   /*
    * TODO
@@ -97,7 +125,7 @@ exports.Game = function () {
 
   this.categoryFactory = function(name, question, index = 0){
 
-    return { cat: name, questions : this.createQuestions(name, NUMBER_OF_QUESTIONS), index}
+    return { cat: name, questions : this.createQuestions(name, NUMBER_OF_QUESTIONS), index, boardPostions: []}
 
   }
 
@@ -122,6 +150,15 @@ exports.Game = function () {
     if (places[currentPlayer] == 10) return SPORTS;
     return ROCK;
   };
+
+  this.getCurrentCat= function  (num) {
+        for (let i = 0; i < deckArray.length; i++) {
+            let deck = deckArray[i];
+            if (deck.boardPosition.includes(num)) {
+                return deck.cat;
+            }
+        }
+    }
 
   this.isPlayable = function () {
     return players.length >= 2;
@@ -223,8 +260,8 @@ exports.Game = function () {
             players[currentPlayer] + " is getting out of the penalty box"
           );
           places[currentPlayer] = places[currentPlayer] + roll;
-          if (places[currentPlayer] > 11) {
-            places[currentPlayer] = places[currentPlayer] - 12;
+          if (places[currentPlayer] > BOARD_LENGTH -1) {
+            places[currentPlayer] = places[currentPlayer] - BOARD_LENGTH;
           }
 
           console.log(
@@ -242,8 +279,8 @@ exports.Game = function () {
         }
       } else {
         places[currentPlayer] = places[currentPlayer] + roll;
-        if (places[currentPlayer] > 11) {
-          places[currentPlayer] = places[currentPlayer] - 12;
+        if (places[currentPlayer] > BOARD_LENGTH - 1) {
+          places[currentPlayer] = places[currentPlayer] - BOARD_LENGTH;
         }
 
         console.log(
